@@ -5,7 +5,13 @@ function list() {
 }
 
 function create(restaurant) {
-  // Your solution here
+  return knex("restaurants")
+    .insert(restaurant)
+    .returning("*")
+    .then((createdRecords) => { 
+//     console.log("createdRecords", createdRecords) //returns an array of objects
+    return createdRecords[0];
+  })
 }
 
 function read(restaurant_id = 0) {
@@ -20,7 +26,7 @@ function update(updatedRestaurant) {
 }
 
 function destroy(restaurant_id) {
-  // Your solution here
+  return knex("restaurants").where({restaurant_id}).del();
 }
 
 module.exports = {
